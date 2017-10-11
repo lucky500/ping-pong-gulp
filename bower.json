@@ -1,0 +1,22 @@
+{
+  "name": "ping_pong_follow_along",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Luciano Oliveira"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/lucky500/roman-numerals",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "bootstrap": "^3.3.7",
+    "moment": "^2.19.0"
+  }
+}
