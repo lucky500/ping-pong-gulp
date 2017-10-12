@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
-//var rename = require('gulp-rename');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var utilities = require('gulp-util');
@@ -30,13 +29,6 @@ gulp.task('concatInterface', function() {
     .pipe(gulp.dest('./tmp'));
 });
 
-
-// gulp.task('browserify', ['concatInterface'], function() {
-//   return browserify({ entries: ['./tmp/allConcat.js'] })
-//     .bundle()
-//     .pipe(source('app.js'))
-//     .pipe(gulp.dest('./build/js'));
-// });
 
 //using vinyl-source-stream: 
 gulp.task('browserify', ['concatInterface'], function() {
@@ -99,7 +91,7 @@ gulp.task('serve', function(){
   gulp.watch(['bower.json'], ['bowerBuild']);
 });
 
-gulp.task('jsBuild', ['jsBrowserify', 'jshint'], function(){
+gulp.task('jsBuild', ['browserify', 'jshint'], function(){
   browserSync.reload();
 });
 
