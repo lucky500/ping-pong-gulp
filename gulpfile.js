@@ -1,15 +1,16 @@
-var gulp = require('gulp');
-var watchify = require('watchify');
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var utilities = require('gulp-util');
-var del  = require('del');
-var jshint = require('gulp-jshint');
+var gulp        = require('gulp');
+var watchify    = require('watchify');
+var babel       = require('babelify');
+var browserify  = require('browserify');
+var source      = require('vinyl-source-stream');
+var concat      = require('gulp-concat');
+var uglify      = require('gulp-uglify');
+var utilities   = require('gulp-util');
+var del         = require('del');
+var jshint      = require('gulp-jshint');
 var browserSync = require('browser-sync').create();
 
-var lib = require('bower-files')({
+var lib         = require('bower-files')({
   "overrides":{
     "bootstrap" : {
       "main": [
@@ -33,9 +34,13 @@ gulp.task('concatInterface', function() {
 
 //using vinyl-source-stream: 
 gulp.task('browserify', ['concatInterface'], function() {
-  var bundleStream = browserify('./tmp/allConcat.js').bundle()
+  var bundleStream = browserify('./tmp/allConcat.js')
+    .transform(babel.configure({
+      presets: ["es2015"]
+    }))
  
   bundleStream
+    .bundle()
     .pipe(source('app.js'))
     .pipe(gulp.dest('./build/js'))
 });
@@ -44,6 +49,12 @@ gulp.task("minifyScripts", ['browserify'], function(){
   return gulp.src("./build/js/app.js")
   .pipe(uglify())
   .pipe(gulp.dest("./build/js"))
+});
+
+gulp.task('cssBuild', function(){
+  return gulp.src(['css/*.css'])
+    .pipe(concat('styles.min.css'))
+    .pipe(gulp.dest('./build/css'))
 });
 
 gulp.task("clean", function(){
@@ -78,7 +89,6 @@ gulp.task('bowerCSS', function () {
     .pipe(gulp.dest('./build/css'));
 });
 
-
 gulp.task('bower', ['bowerJS', 'bowerCSS']);
 
 gulp.task('serve', function(){
@@ -98,7 +108,8 @@ gulp.task('jsBuild', ['browserify', 'jshint'], function(){
 
 gulp.task('bowerBuild', ['bower'], function(){
   browserSync.reload();
-})
+});
+
 
 
 

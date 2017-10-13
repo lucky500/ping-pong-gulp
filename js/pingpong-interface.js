@@ -1,4 +1,6 @@
-var Calculator = require('./../js/pingpong.js').calculatorModule;
+//var Calculator = require('./../js/pingpong.js').calculatorModule;
+
+import { Calculator } from './../js/pingpong.js';
 
 $(document).ready(function() {
   $('#ping-pong-form').submit(function(event) {

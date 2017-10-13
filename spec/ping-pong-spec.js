@@ -20,6 +20,7 @@ describe('Calculator', function() {
   });
 
   it('should return the inputed number, if the number is not divisible by either 3 or 5', function() {
+    console.log(reusableCalculator);
     expect(reusableCalculator.pingPong(2)).toEqual([1, 2]);
   });
 });
